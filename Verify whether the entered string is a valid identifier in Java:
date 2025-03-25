@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define NUM_KEYWORDS 4
+
+const char *keywords[] = {"int", "float", "char", "return"};
+
+int is_keyword(const char *str) {
+    for (int i = 0; i < NUM_KEYWORDS; i++) {
+        if (strcmp(str, keywords[i]) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int is_valid_java_identifier(char *str) {
+    if (is_keyword(str)) return 0; // Cannot be a keyword
+    if (!isalpha(str[0]) && str[0] != '_') return 0;
+    for (int i = 1; str[i] != '\0'; i++) {
+        if (!isalnum(str[i]) && str[i] != '_') return 0;
+    }
+    return 1;
+}
+
+int main() {
+    char identifier[256];
+
+    printf("Enter a string to check if it's a valid Java identifier: ");
+    scanf("%s", identifier);
+
+    if (is_valid_java_identifier(identifier)) {
+        printf("Valid identifier\n");
+    } else {
+        printf("Invalid identifier\n");
+    }
+
+    return 0;
+}
